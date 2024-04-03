@@ -156,9 +156,10 @@ while loop:
                     filedate = datetime.now().strftime('%H-%M-%S')
                     if not testing:
                         folderdate = datetime.now().strftime('%Y-%m-%d')
-                        if not os.path.isdir(folderdate):
-                            os.mkdir(folderdate)
-                        filename = '%s/%s.mkv' % (folderdate,filedate)
+#                       if not os.path.isdir(folderdate):
+#                           os.mkdir(folderdate)
+                        filename = 'tmp/%s-%s.mkv' % (folderdate,filedate)
+                        namefile = 'mkv/%s-%s.mkv' % (folderdate,filedate)
                         ffmpeg_copy = (
                             FFmpeg()
                             .option("y")
@@ -191,6 +192,7 @@ while loop:
                         ffmpeg_thread.join()
                         ffmpeg_copy = 0
                         print(filedate + " recording stopped")
+                        os.rename(filename, namefile)
                         # delete recording if total length is equal to the tail_length value,
                         # indicating a false positive
                         if auto_delete:
